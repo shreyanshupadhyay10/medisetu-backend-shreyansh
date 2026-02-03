@@ -1,0 +1,94 @@
+// Test 1: Patient Login 
+POST http://localhost:3000/api/patient/login
+Content-Type: application/json
+
+{
+    "patientId": "P998",
+    "phoneNumber": "9876543210"
+}
+
+// test 2: Create a Report 
+POST http://localhost:3000/api/patient/P999/reports
+Content-Type: application/json
+
+{
+    "title": "Full CBC Report",
+    "hospitalName": "Apollo Clinic",
+    "status": "Normal"
+}
+
+// Test 3: List Reports 
+GET http://localhost:3000/api/patient/P999/reports?q=CBC&status=Normal
+// Test Doctor Login
+POST http://localhost:3000/api/doctor/login
+Content-Type: application/json
+
+{
+    "doctorId": "DOC_001",
+    "email": "doctor@medisetu.com"
+}
+
+// Test Book Appointment 
+POST http://localhost:3000/api/doctor/DOC_001/appointments
+Content-Type: application/json
+
+{
+    "patientName": "Shreyansh",
+    "phone": "1234567890",
+    "date": "2026-02-10",
+    "slot": "10:00 AM",
+    "reason": "Checkup"
+}
+// 1. Doctor Login
+POST http://localhost:3000/api/doctor/login
+Content-Type: application/json
+
+{
+    "doctorId": "DOC1",
+    "email": "dr_shreyansh@medisetu.com"
+}
+
+//2. Book an Appointment
+POST http://localhost:3000/api/doctor/DOC1/appointments
+Content-Type: application/json
+
+{
+    "patientName": "Rahul Kumar",
+    "phone": "9998887776",
+    "date": "2026-02-06",
+    "slot": "11:30 AM",
+    "reason": "Fever"
+}
+
+// 3 Search Appointments (Filter by Status)
+GET http://localhost:3000/api/doctor/DOC1/appointments?status=Scheduled&q=Rahul
+
+// Test 4: Update Appointment Status
+
+PATCH http://localhost:3000/api/doctor/appointments/6980634285c18c5df596a18e/status
+Content-Type: application/json
+
+{
+    "status": "CheckedIn"
+}
+
+// Test 5: Fetch Patient Profile
+GET http://localhost:3000/api/doctor/patients/P999
+
+// Test 6: Save Patient Notes and Vitals (Module 6)
+POST  http://localhost:3000/api/doctor/patients/P999/notes
+Content-Type: application/json
+
+{
+    "complaint": "Persistent cough and mild fever",
+    "noteText": "Advised 3 days of rest and paracetamol. Review if fever persists.",
+    "vitals": {
+        "bp": "120/80",
+        "pulse": 72,
+        "temperature": 99.1
+    }
+}
+
+
+ // Test 7: Fetch Patient Notes History
+GET http://localhost:3000/api/doctor/patients/P999/notes?page=1&limit=10
